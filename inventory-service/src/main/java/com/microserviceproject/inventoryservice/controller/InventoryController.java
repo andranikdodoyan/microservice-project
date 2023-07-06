@@ -1,7 +1,8 @@
 package com.microserviceproject.inventoryservice.controller;
 
-import com.microserviceproject.inventoryservice.dto.InventoryResponseDto;
 import com.microserviceproject.inventoryservice.service.InventoryService;
+import com.microserviceproject.common.dto.InventoryResponseDto;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,10 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/inventory")
 public class InventoryController {
 
-    private InventoryService inventoryService;
+    private final InventoryService inventoryService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
