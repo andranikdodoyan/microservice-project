@@ -18,7 +18,8 @@ import java.util.UUID;
 @AllArgsConstructor
 public class OrderService {
     private final OrderRepository orderRepository;
-    private final WebClient webClient;
+    private final WebClient.Builder webClientBuilder;
+
     public void placeOrder(OrderRequestDto orderRequestDto) {
         Order newOrder = new Order();
         newOrder.setOrderNumber(UUID.randomUUID().toString());
@@ -28,10 +29,9 @@ public class OrderService {
         newOrder.setOrderLineItemsList(orderLineItemsList);
 
         List<String> skuCodesToBeChecked = newOrder.getOrderLineItemsList().stream().map(OrderLineItems::getSkuCode).toList();
-
 //        Call Inventory Service
-        InventoryResponseDto[] inventoryResponseDtoArray = webClient.get()
-                .uri("http://localhost:8082/api/inventory",
+        InventoryResponseDto[] inventoryResponseDtoArray = webClientBuilder.build().get()
+                .uri("http://inventory-service/api/inventory",
                         uriBuilder -> uriBuilder.queryParam("skuCode", skuCodesToBeChecked).build())
                 .retrieve()
                 .bodyToMono(InventoryResponseDto[].class)
@@ -52,4 +52,5 @@ public class OrderService {
         orderLineItems.setSkuCode(orderLineItemsDto.getSkuCode());
         return orderLineItems;
     }
+
 }

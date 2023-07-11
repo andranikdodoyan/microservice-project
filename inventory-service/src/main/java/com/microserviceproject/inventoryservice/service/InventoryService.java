@@ -4,6 +4,7 @@ import com.microserviceproject.inventoryservice.repository.InventoryRepository;
 import com.microserviceproject.common.dto.InventoryResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
